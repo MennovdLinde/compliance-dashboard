@@ -17,33 +17,49 @@ export function Layout({ children }: { children: ReactNode }) {
   function handleLogout() { logout(); navigate('/login'); }
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#0f172a', color: '#e2e8f0', fontFamily: 'system-ui, sans-serif' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', color: 'var(--text)', fontFamily: 'inherit' }}>
       {/* Sidebar */}
-      <aside style={{ width: 240, background: '#1e293b', borderRight: '1px solid #334155', display: 'flex', flexDirection: 'column', padding: '24px 0' }}>
-        <div style={{ padding: '0 20px 24px', borderBottom: '1px solid #334155' }}>
-          <div style={{ fontSize: 15, fontWeight: 700, color: '#f1f5f9' }}>🛡 ComplianceOS</div>
-          <div style={{ fontSize: 12, color: '#64748b', marginTop: 4 }}>{user?.company}</div>
+      <aside style={{
+        width: 240,
+        background: 'var(--sidebar-bg)',
+        backdropFilter: 'var(--glass-blur)',
+        WebkitBackdropFilter: 'var(--glass-blur)',
+        borderRight: '1px solid var(--sidebar-border)',
+        display: 'flex', flexDirection: 'column',
+        padding: '24px 0',
+        position: 'sticky', top: 0, height: '100vh',
+      }}>
+        <div style={{ padding: '0 20px 24px', borderBottom: '1px solid var(--sidebar-border)' }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)' }}>🛡 ComplianceOS</div>
+          <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 4 }}>{user?.company}</div>
         </div>
 
-        <nav style={{ flex: 1, padding: '16px 0' }}>
+        <nav style={{ flex: 1, padding: '12px 0' }}>
           {NAV.map(({ to, label }) => (
             <NavLink key={to} to={to} style={({ isActive }) => ({
-              display: 'block', padding: '10px 20px', fontSize: 13, textDecoration: 'none', borderLeft: '3px solid transparent',
-              color: isActive ? '#f1f5f9' : '#94a3b8',
-              background: isActive ? '#0f172a' : 'transparent',
-              borderLeftColor: isActive ? '#3b82f6' : 'transparent',
+              display: 'block', padding: '10px 20px', fontSize: 13, textDecoration: 'none',
+              borderLeft: isActive ? '2px solid var(--accent)' : '2px solid transparent',
+              color: isActive ? 'var(--text)' : 'var(--muted)',
+              background: isActive ? 'var(--glass-bg)' : 'transparent',
+              fontWeight: isActive ? 600 : 400,
+              transition: 'background 0.15s, color 0.15s',
             })}>
               {label}
             </NavLink>
           ))}
         </nav>
 
-        <div style={{ padding: '16px 20px', borderTop: '1px solid #334155' }}>
-          <div style={{ fontSize: 12, color: '#64748b', marginBottom: 8 }}>{user?.fullName}</div>
-          <div style={{ fontSize: 11, color: '#475569', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        <div style={{ padding: '16px 20px', borderTop: '1px solid var(--sidebar-border)' }}>
+          <div style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 4 }}>{user?.fullName}</div>
+          <div style={{ fontSize: 11, color: 'var(--accent)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}>
             {user?.role}
           </div>
-          <button onClick={handleLogout} style={{ fontSize: 12, color: '#64748b', background: 'none', border: '1px solid #334155', borderRadius: 4, padding: '4px 10px', cursor: 'pointer' }}>
+          <button onClick={handleLogout} style={{
+            fontSize: 12, color: 'var(--muted)', background: 'var(--glass-bg)',
+            border: '1px solid var(--glass-border)', borderRadius: 6,
+            padding: '4px 10px', cursor: 'pointer', fontFamily: 'inherit',
+            transition: 'background 0.15s',
+          }}>
             Sign out
           </button>
         </div>
